@@ -1,0 +1,8 @@
+.venv
+.idea
+media
+manage.py
+services/required.py
+db.sqlite3
+
+
