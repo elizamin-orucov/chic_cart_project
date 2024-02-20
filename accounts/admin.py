@@ -18,7 +18,6 @@ class UserAdmin(BaseUserAdmin):
         "username",
         "is_active",
         "is_superuser",
-        "activation_code",
         "slug",
     )
     list_filter = ("is_active", "is_superuser")
@@ -32,8 +31,11 @@ class UserAdmin(BaseUserAdmin):
                     "first_name",
                     "last_name",
                     "password",
+                    "birth_day",
+                    "mobile",
+                    "gender",
+                    "bio",
                     "logo",
-                    "activation_code"
                 )
             },
         ),
@@ -47,6 +49,7 @@ class UserAdmin(BaseUserAdmin):
                 "fields": (
                     "email",
                     "username",
+                    "mobile",
                     "password1",
                     "password2",
                 ),

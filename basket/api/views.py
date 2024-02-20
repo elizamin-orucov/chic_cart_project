@@ -1,11 +1,8 @@
 from ..models import Basket
 from rest_framework import generics
-from .serializer import BasketListSerializer, BasketCreateSerializer
-from services.get_api import get_ip_address
 from rest_framework.response import Response
-from store.models import Product
 from rest_framework.permissions import IsAuthenticated
-from store.api.serializer import ProductListSerializer
+from .serializer import BasketListSerializer, BasketCreateSerializer
 
 
 class BasketListView(generics.ListAPIView):
@@ -36,7 +33,8 @@ class BasketCreateView(generics.CreateAPIView):
             serializer = self.serializer_class(instance=obj, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-        return Response({"created": created})
+        serializer = self.serializer_class(obj).data
+        return Response(serializer)
 
 
 class BasketDeleteView(generics.DestroyAPIView):

@@ -16,6 +16,7 @@ class NotificationsSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         repr_ = super().to_representation(instance)
+        # calculating the time since the message was sent
         date = calculate_time_difference_from_now(instance.created_at)
         repr_["date_info"] = date
         return repr_

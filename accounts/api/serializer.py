@@ -108,7 +108,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         password_confirm = validated_data.pop("password_confirm")
         user = User.objects.create(
             **validated_data, is_active=False,
-            activation_code=CodeGenerator().create_slug_shortcode(size=4, model_=User)
+            activation_code=CodeGenerator().create_user_activation_code(size=4, model_=User)
         )
         user.set_password(password_confirm)
         user.save()

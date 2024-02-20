@@ -27,7 +27,7 @@ class PromoCode(DateMixin):
 class Order(SlugMixin):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=50, choices=ORDER_STATUS_CHOICES, default="Order Received")
-    shipping_address_name = models.CharField(max_length=250, blank=True, null=True)
+    shipping_address_name = models.CharField(max_length=250, blank=True, null=True, default="Free")
     shipping_address = models.CharField(max_length=250, blank=True, null=True)
     payment_method = models.CharField(max_length=50, blank=True, null=True)
     promo_code = models.CharField(max_length=50, blank=True, null=True)

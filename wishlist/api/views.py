@@ -1,10 +1,12 @@
 from ..models import Wishlist
+from store.models import Product
 from rest_framework import generics
 from .serializer import WishListSerializer
-from store.models import Product
-from store.api.serializer import ProductListSerializer
 from rest_framework.response import Response
+from django.db.models.functions import Coalesce
+from django.db.models import F, Avg, IntegerField
 from rest_framework.permissions import IsAuthenticated
+from store.api.serializer import ProductListSerializer
 
 
 class WishListView(generics.ListAPIView):
@@ -17,7 +19,12 @@ class WishListView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         id_list = self.get_queryset().values_list("product_id")
-        products = Product.objects.filter(id__in=id_list)
+        products = Product.objects.annotate(
+            disc_interest=Coalesce("discount_interest", 0, output_field=IntegerField()),
+            disc_price=F("price") * F("disc_interest") / 100,
+            totalprice=F("price") - F("disc_price"),
+            rating=Avg("review__rating")
+        ).filter(id__in=id_list)
         serializer = ProductListSerializer(products, many=True).data
         return Response(serializer)
 
@@ -32,7 +39,8 @@ class WishCreateView(generics.CreateAPIView):
         obj, created = Wishlist.objects.get_or_create(user=request.user, product=product)
         if not created:
             obj.delete()
-        return Response({"created": created})
+        serializer = self.serializer_class(obj)
+        return Response(serializer.data)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)

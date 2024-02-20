@@ -16,6 +16,7 @@ class Notification(DateMixin):
         return self.user.email
 
     def save(self, *args, **kwargs):
+        # adjusting the bell image in read and unread notifications
         if self.read:
             logo_path = "static/notifications/notifications-read.png"
             self.image.save("default_user_logo.jpg", open(logo_path, "rb"), save=False)

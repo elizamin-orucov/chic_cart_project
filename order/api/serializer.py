@@ -10,20 +10,16 @@ from ..models import PromoCode, Order, OrderItem, OrderTrack
 
 
 class PromoCodeSerializer(serializers.ModelSerializer):
-    payment_id = serializers.CharField(write_only=True)
-    total = serializers.FloatField(write_only=True)
     promo_code = serializers.CharField()
 
     class Meta:
         model = PromoCode
         fields = (
-            "total",
-            "payment_id",
             "promo_code",
             "discount_price",
         )
         extra_kwargs = {
-            "discount_price": {"read_only": True}
+            "discount_price": {"read_only": True},
         }
 
     def validate(self, attrs):
@@ -155,7 +151,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
             shipping_address=f"{address.city},{address.state}",
         )
         # updating the estimated time in accordance with the selected shipping period
-        new_order.delivery_date = timedelta(days=shipping.duration)
+        new_order.delivery_date += timedelta(days=shipping.duration)
         new_order.save()
 
         # creation of order items
@@ -168,9 +164,9 @@ class OrderDetailSerializer(serializers.ModelSerializer):
                 total_price=_.product.total_price
             )
         # updating users of used promo code
-        if promo_code:
-            promo_code_users_update = PromoCode.objects.get(promo_code=promo_code).users.add(user)
-            promo_code_users_update.save()
+        qs_promo = PromoCode.objects.filter(promo_code=promo_code)
+        if qs_promo.exists():
+            qs_promo.get().users.add(user)
         basket_list.delete()
         return new_order
 

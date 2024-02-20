@@ -1,5 +1,5 @@
-from rest_framework import serializers
 from ..models import Basket
+from rest_framework import serializers
 from store.api.serializer import ProductImageSerializer
 from base.api.serializer import ColorSerializer, SizeSerializer
 
@@ -9,13 +9,11 @@ class BasketListSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField(read_only=True)
     name = serializers.SerializerMethodField(read_only=True)
     color_choices = serializers.SerializerMethodField(read_only=True)
-    size_choices = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Basket
         fields = (
             "color_choices",
-            "size_choices",
             "total_price",
             "quantity",
             "image",
@@ -35,9 +33,6 @@ class BasketListSerializer(serializers.ModelSerializer):
     def get_color_choices(self, obj):
         return ColorSerializer(obj.product.color.all(), many=True).data
 
-    def get_size_choices(self, obj):
-        return SizeSerializer(obj.product.size.all(), many=True).data
-
     def get_total_price(self, obj):
         discount_price = obj.product.price * (obj.product.discount_interest or 0) / 100
         total_price = obj.product.price - discount_price
@@ -47,6 +42,8 @@ class BasketListSerializer(serializers.ModelSerializer):
         repr_ = super().to_representation(instance)
         repr_["product_color"] = ColorSerializer(instance.color).data
         repr_["product_size"] = SizeSerializer(instance.size).data
+        if instance.product.size.all():
+            repr_["size_choices"] = SizeSerializer(instance.product.size.all(), many=True).data
         return repr_
 
 
@@ -63,7 +60,6 @@ class BasketCreateSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {
             "color": {"required": True},
-            "size": {"required": True},
         }
 
 
