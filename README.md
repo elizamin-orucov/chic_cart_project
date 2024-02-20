@@ -1,8 +1,8 @@
 ## Chic Cart
 <div style="display: flex;">
-    <img src="img/home.jpg" alt="Resim 1">
-    <img src="img/list1.jpg" alt="Resim 2">
-    <img src="img/detail.jpg" alt="Resim 3">
+    <img src="img/home.jpg" alt="home" height="250">&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="img/list1.jpg" alt="list" height="250">&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="img/detail.jpg" alt="detail" height="250">
 </div>
 
 #### The django_rest_framework project I made for the mobile commerce application.
