@@ -41,8 +41,8 @@ class BasketListSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         repr_ = super().to_representation(instance)
         repr_["product_color"] = ColorSerializer(instance.color).data
-        repr_["product_size"] = SizeSerializer(instance.size).data
         if instance.product.size.all():
+            repr_["product_size"] = SizeSerializer(instance.size).data
             repr_["size_choices"] = SizeSerializer(instance.product.size.all(), many=True).data
         return repr_
 

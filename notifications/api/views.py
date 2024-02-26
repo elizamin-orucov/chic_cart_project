@@ -37,6 +37,9 @@ class NotificationDeleteView(generics.DestroyAPIView):
     serializer_class = NotificationsDetailSerializer
     lookup_field = "id"
 
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user).order_by("-created_at")
+
 
 
 
