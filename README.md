@@ -13,7 +13,7 @@ The project is under development.
 
 ## Installation
 ````bash
-git clone https://github.com/elizamin-orucov/Chic_Cart_Project .
+git clone https://github.com/elizamin-orucov/chic_cart_project .
 pip install -r requirements.txt
 django-admin startproject core .
 py manage.py migrate
