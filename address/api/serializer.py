@@ -7,6 +7,7 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAddress
         fields = (
+            "id",
             "address_name",
             "phone_number",
             "city",

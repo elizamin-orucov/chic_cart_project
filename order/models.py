@@ -3,8 +3,8 @@ from services.generator import CodeGenerator
 from django.utils.encoding import smart_bytes
 from django.contrib.auth import get_user_model
 from services.mixin import DateMixin, SlugMixin
-from services.choices import ORDER_STATUS_CHOICES, TRACK_ORDER_STATUS
 from django.utils.http import urlsafe_base64_encode
+from services.choices import ORDER_STATUS_CHOICES, TRACK_ORDER_STATUS
 
 
 User = get_user_model()

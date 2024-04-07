@@ -1,5 +1,6 @@
 from ..models import Basket
 from rest_framework import generics
+from .permissions import BasketPermission
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializer import BasketListSerializer, BasketCreateSerializer
@@ -10,7 +11,7 @@ class BasketListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
-        qs = Basket.objects.filter(user=self.request.user)
+        qs = Basket.objects.filter(user=self.request.user).order_by("-created_at")
         return qs
 
 
@@ -37,14 +38,21 @@ class BasketCreateView(generics.CreateAPIView):
         return Response(serializer)
 
 
+class BasketUpdateView(generics.UpdateAPIView):
+    serializer_class = BasketListSerializer
+    permission_classes = (IsAuthenticated, BasketPermission)
+    lookup_field = "id"
+
+    def get_queryset(self):
+        qs = Basket.objects.filter(user=self.request.user).order_by("-created_at")
+        return qs
+
+
 class BasketDeleteView(generics.DestroyAPIView):
     serializer_class = BasketCreateSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, BasketPermission)
     lookup_field = "id"
 
     def get_queryset(self):
         return Basket.objects.filter(user=self.request.user)
-
-
-
 

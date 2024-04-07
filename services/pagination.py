@@ -18,4 +18,3 @@ class CustomPagination(PageNumberPagination):
                 "results": data,
             }
         )
-

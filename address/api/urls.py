@@ -4,6 +4,8 @@ from . import views
 app_name = "address_api"
 
 urlpatterns = [
-    path("list/and/create/", views.AddressListCreateView.as_view(), name="list_and_create"),
-    path("edit/", views.AddressEditView.as_view(), name="address_edit"),
+    path("edit/<id>/", views.AddressEditView.as_view(), name="address_edit"),
+    path("create/", views.AddressCreateView.as_view(), name="create"),
+    path("list/", views.AddressListView.as_view(), name="list"),
 ]
+

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
-    PermissionsMixin
+    PermissionsMixin,
 )
 from .managers import UserManager
 from ckeditor.fields import RichTextField
@@ -42,7 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         ordering = ["-timestamp"]
         verbose_name = "User"
-        verbose_name_plural = "Users"
+        verbose_name_plural = "User Accounts"
 
     def __str__(self):
         return self.email

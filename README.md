@@ -5,11 +5,11 @@
     <img src="img/detail.jpg" alt="detail" height="250">
 </div>
 
-#### The django_rest_framework project I made for the mobile commerce application.
+#### Chic Cart mobile project with Django Rest Framework
 
 ## Description
 
-The project is under development.
+This project is a mobile commerce application developed using Django Rest Framework. Users can purchase various products such as shoes, clothing, and jewelry. Additionally, discounted items are also available.
 
 ## Installation
 ````bash

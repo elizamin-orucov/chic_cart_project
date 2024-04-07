@@ -35,5 +35,4 @@ class CodeGenerator:
     def create_invoice_id(cls, size, model_):
         new_id = cls.code_slug_generator(size=size, chars=string.digits)
         id_exists = model_.objects.filter(invoice_id=new_id).exists()
-        return cls.create_slug_shortcode(size, model_) if id_exists else new_id
-
+        return cls.create_invoice_id(size, model_) if id_exists else new_id

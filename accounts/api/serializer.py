@@ -142,7 +142,7 @@ class ActivationSerializer(serializers.ModelSerializer):
         activation_code = attrs.get("activation_code")
         user = self.instance
         if not user.activation_code == activation_code:
-            raise serializers.ValidationError({"error": "Kod sefdir."})
+            raise serializers.ValidationError({"error": "Code is wrong."})
         return super().validate(attrs)
 
     def update(self, instance, validated_data):
@@ -312,6 +312,13 @@ class PasswordChangeSerializer(serializers.ModelSerializer):
         if user.check_password(password_confirm):
             raise serializers.ValidationError({"error": "You used this password."})
         return attrs
+
+    def update(self, instance, validated_data):
+        new_password = validated_data.get("new_password")
+        user = self.context.get("user")
+        user.set_password(new_password)
+        user.save()
+        return instance
 
 
 class UpdateUserProfileSerializer(serializers.ModelSerializer):

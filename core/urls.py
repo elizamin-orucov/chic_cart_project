@@ -10,7 +10,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("notifications/", include("notifications.api.urls")),
     path("accounts/", include("accounts.api.urls")),
-    path("wishlist/", include("wishlist.api.urls")),
+    path("favorite/", include("wishlist.api.urls")),
     path("shipping/", include("shipping.api.urls")),
     path("privacy/", include("privacy.api.urls")),
     path("address/", include("address.api.urls")),
@@ -25,28 +25,22 @@ urlpatterns = [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
 # SWAGGER CONFIG
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Test API",
-      default_version='v1',
-      description="Documentation for API URLs",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny, ),
+    openapi.Info(
+        title="Chic Cart API",
+        default_version="v1",
+        description="Documentation for API URLs",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
-
 urlpatterns += [
-   path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
-   path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
-
-
-
-

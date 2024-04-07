@@ -1,5 +1,5 @@
 from django.db import models
-from services.mixin import DateMixin, SlugMixin
+from services.mixin import DateMixin
 from django.contrib.auth import get_user_model
 from phonenumber_field.modelfields import PhoneNumberField
 
